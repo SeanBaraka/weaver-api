@@ -10,12 +10,33 @@ export class UserController {
         return this.userRepository.find();
     }
 
+    async getDrivers(req: Request, res: Response) {
+        const drivers = await this.userRepository.find({where: {
+            role: 'driver'
+        }})
+        return drivers;
+    }
+
     async one(request: Request, response: Response, next: NextFunction) {
         return this.userRepository.findOne(request.params.id);
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.save(request.body);
+    async hire(request: Request, response: Response, next: NextFunction) {
+        const personnel = new User();
+        personnel.firstName = request.body.firstName;
+        personnel.lastName = request.body.lastName;
+        personnel.idNumber = request.body.idNumber;
+        personnel.role = request.body.role
+
+        const hireAttempt = await this.userRepository.save(personnel);
+
+        if (hireAttempt) {
+            const successMessage = {
+                'success': `${hireAttempt.firstName} ${hireAttempt.lastName} hired successfully`
+            }
+
+            return successMessage;
+        }
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {

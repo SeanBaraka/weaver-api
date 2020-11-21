@@ -1,10 +1,11 @@
 import { ProductsController } from "./controller/ProductsController";
 import { ShopsController } from "./controller/ShopsController";
 import {UserController} from "./controller/UserController";
+import { VehiclesController } from "./controller/VehiclesController";
 
 export const Routes = [{
     method: "get",
-    route: "/users",
+    route: "/personnel/list",
     controller: UserController,
     action: "all"
 }, {
@@ -14,9 +15,9 @@ export const Routes = [{
     action: "one"
 }, {
     method: "post",
-    route: "/users",
+    route: "/personnel/new",
     controller: UserController,
-    action: "save"
+    action: "hire"
 }, {
     method: "delete",
     route: "/users/:id",
@@ -64,6 +65,36 @@ export const Routes = [{
     route: '/shops/stock/:id',
     controller: ShopsController,
     action: 'getDayStock'
+},
+{
+    method: 'post',
+    route: '/vehicles/new/',
+    controller: VehiclesController,
+    action: 'addnew'
+},
+{
+    method: 'get',
+    route: '/vehicles/list',
+    controller: VehiclesController,
+    action: 'getAll'
+},
+{
+    method: 'get',
+    route: '/vehicles/routes/list',
+    controller: VehiclesController,
+    action: 'getRoutes'
+},
+{
+    method: 'post',
+    route: '/vehicles/routes/new',
+    controller: VehiclesController,
+    action: 'newRoute'
+},
+{
+    method: 'get',
+    route: '/drivers/list',
+    controller: UserController,
+    action: 'getDrivers'
 }
 
 ];
