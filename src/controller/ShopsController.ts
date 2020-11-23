@@ -208,10 +208,23 @@ export class ShopsController {
             "success": "shop closed successfully"
         }
 
-            // before completion, change the shop's status to closed
-            shop.openStatus = false;
-            await this.shopsRepo.save(shop);
+        // before completion, change the shop's status to closed
+        shop.openStatus = false;
+        await this.shopsRepo.save(shop);
 
-            return successMessage;
+        return successMessage;
     }
+
+    /** attempt to update the store for any new added stock records */
+    async updateStockInfo(req: Request, response: Response) {
+        const stockInfo = await this.stockRepo.findOne(req.params.id)
+        if (stockInfo == null) {
+            const foundStockMessage = {
+                'error': "no stock record matching the given id was found"
+            }
+            response.status(404);
+            return foundStockMessage;
+        }
+    }
+
 }

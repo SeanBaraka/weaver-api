@@ -2,12 +2,16 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Vehicle } from "../entity/Vehicle";
 import { VehicleRoute } from "../entity/VehicleRoute";
+import { VehicleRouteVehicle } from "../entity/VehicleRouteVehicle";
+import { VehicleStockInfo } from "../entity/VehicleStockInfo";
 
 export class VehiclesController {
 
     // initialize the vehicle repository
     private vehicleRepo = getRepository(Vehicle);
-    private routesRepo = getRepository(VehicleRoute)
+    private routesRepo = getRepository(VehicleRoute);
+    private vehicleRouteRepo = getRepository(VehicleRouteVehicle)
+    private vStockRepo = getRepository(VehicleStockInfo)
 
     /** get all available vehicles */
     async getAll(req: Request, response: Response) {
@@ -53,5 +57,79 @@ export class VehiclesController {
 
     async getRoutes(req: Request, res: Response) {
         return this.routesRepo.find();
+    }
+
+    /** assign driver to vehicle */
+    async addDriverToVehicle(req: Request, response: Response) {
+        const driver = req.body.driver
+        const vehiclePlate = req.body.vehicle
+        const route = req.body.route
+
+        const routeVehicle = new VehicleRouteVehicle();
+        routeVehicle.driver = driver;
+        routeVehicle.vehicle = vehiclePlate;
+        routeVehicle.route = route;
+
+        const attemptSave = await this.vehicleRouteRepo.save(routeVehicle);
+
+        if(attemptSave) {
+            const successMessage = {
+                "success": "driver added to vehicle and assigned route"
+            }
+
+            return successMessage;
+        }
+    }
+
+    /** record stock for a particular vehicle */
+    async addStockToVehicle(req: Request, res: Response) {
+        const plateNumber = req.body.vehicle; // get the vehicle from the request
+
+        const vehicle = await this.vehicleRepo.findOne({
+            where: {
+                plateNumber: plateNumber
+            }
+        });
+
+        if (vehicle == null) {
+            const errorNotFound = {
+                "error": "the requested vehicle could not be found"
+            }
+            res.status(404);
+
+            return errorNotFound;
+        }
+
+        // get the stock items from the request array
+        const stock = Array.from(req.body.stock);
+
+        stock.forEach(async (item: any) => {
+            const vStock = new VehicleStockInfo()
+
+            vStock.openingUnits = item.openingUnits;
+            vStock.productName = item.productName;
+            vStock.unitPrice = item.unitPrice;
+            vStock.vehicle = vehicle
+
+            await this.vStockRepo.save(vStock);
+        })
+
+        const successMessage = {
+            "success": 'vehicle dispatched !!'
+        }
+        return successMessage;
+
+    }
+
+    /** an attempt to get all the vehicles that have already been dispatched */
+    async vehiclesInRoute(req: Request, resp: Response) {
+        return this.vehicleRouteRepo.find();
+    }
+
+     /** an attempt to get vehicles and their routes on a particular day */
+     async vehicleInRouteByDay(req: Request, resp: Response) {
+        const dateFilter: string = req.body.date;
+         
+        return (await this.vehicleRouteRepo.find()).filter(x => x.date.toISOString().split('T')[0] == dateFilter);
     }
 }

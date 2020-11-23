@@ -95,6 +95,24 @@ export const Routes = [{
     route: '/drivers/list',
     controller: UserController,
     action: 'getDrivers'
+},
+{
+    method: 'post',
+    route: '/vehicle/driver',
+    controller: VehiclesController,
+    action: 'addDriverToVehicle'
+},
+{
+    method: 'post',
+    route: '/vehicle/dispatch',
+    controller: VehiclesController,
+    action: 'addStockToVehicle'
+},
+{
+    method: 'get',
+    route: '/vehicles/in-route',
+    controller: VehiclesController,
+    action: 'vehiclesInRoute'
 }
 
 ];
