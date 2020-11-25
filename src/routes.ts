@@ -62,6 +62,12 @@ export const Routes = [{
 },
 {
     method: 'post',
+    route: '/shops/new',
+    controller: ShopsController,
+    action: 'addShop'
+},
+{
+    method: 'post',
     route: '/shops/stock/:id',
     controller: ShopsController,
     action: 'getDayStock'

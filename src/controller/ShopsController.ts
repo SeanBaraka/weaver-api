@@ -17,6 +17,25 @@ export class ShopsController {
         return shops; // return the shops obtained
     }
 
+    /** add a new shop */
+    async addShop(req: Request, response: Response) {
+        const shop = new Shop()
+        shop.name = req.body.name
+        if(req.body.desc) {
+            shop.description = req.body.desc
+        }
+
+        const addShopAttempt = await this.shopsRepo.save(shop);
+
+        if(addShopAttempt) {
+            const message = {
+                "success": `${addShopAttempt.name} shop added successfully`
+            }
+
+            return message;
+        }
+    }
+
     /** Gets a single shop based on the shop name provided */
     async getShop(req: Request, resp: Response) {
         // request body should have a shopName key

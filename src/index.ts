@@ -13,7 +13,7 @@ createConnection().then(async connection => {
     const app = express();
     app.use(bodyParser.json());
 
-    let allowedHosts = ['http://localhost:4200', 'http://localhost']
+    let allowedHosts = ['http://localhost:4200', 'http://localhost', 'http://192.168.0.105']
     let corsOptionsDelegate = function(req, callback) {
         let corsOptions;
         if(allowedHosts.indexOf(req.header('Origin')) !== -1) {

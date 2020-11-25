@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,13 +21,13 @@
 
 DROP TABLE IF EXISTS `available_vehicles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `available_vehicles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `modelType` varchar(255) NOT NULL,
   `plateNumber` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -55,7 +55,7 @@ CREATE TABLE `products` (
   `unitPrice` int NOT NULL,
   `availableUnits` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'2020-11-08 19:25:40.538117','2020-11-08 19:25:40.538117','Trace 250ml',140,10),(2,'2020-11-08 19:31:56.060934','2020-11-08 19:31:56.060934','Drinking Water 500ml',50,100),(3,'2020-11-08 19:32:14.749719','2020-11-08 19:32:14.749719','Best 750ml',700,10),(4,'2020-11-11 16:31:45.730954','2020-11-11 16:31:45.730954','Fanta Orange 300ml',30,20),(5,'2020-11-11 16:36:48.121560','2020-11-11 16:36:48.121560','Sprite 300ml',30,10),(6,'2020-11-11 19:38:26.015431','2020-11-11 19:38:26.015431','Celar Cask',120,700),(7,'2020-11-11 19:38:43.462476','2020-11-11 19:38:43.462476','4h Street',100,700),(8,'2020-11-11 19:39:34.132264','2020-11-11 19:39:34.132264','Red Label',1200,100),(9,'2020-11-11 20:00:40.512934','2020-11-11 20:00:40.512934','Best 1lt',800,50);
+INSERT INTO `products` VALUES (10,'2020-11-25 18:04:02.831139','2020-11-25 18:04:02.831139','Soda',40,100),(11,'2020-11-25 18:04:19.225951','2020-11-25 18:04:19.225951','Konyagi',200,100),(12,'2020-11-25 18:04:29.732881','2020-11-25 18:04:29.732881','K/Cane',300,100),(13,'2020-11-25 18:04:42.184302','2020-11-25 18:04:42.184302','K/Extra',200,100),(14,'2020-11-25 18:04:54.302756','2020-11-25 18:04:54.302756','Chrome',200,100),(15,'2020-11-25 18:05:03.766437','2020-11-25 18:05:03.766437','W/Pearl',180,100),(16,'2020-11-25 18:05:11.126078','2020-11-25 18:05:11.126078','Kibao',200,100),(17,'2020-11-25 18:05:24.481705','2020-11-25 18:05:24.481705','V/A',300,100),(18,'2020-11-25 18:05:36.046111','2020-11-25 18:05:36.046111','Napoleon',180,100),(19,'2020-11-25 18:05:47.559709','2020-11-25 18:05:47.559709','K/King',180,100),(20,'2020-11-25 18:06:03.136388','2020-11-25 18:06:03.136388','M/Walker',140,100),(21,'2020-11-25 18:06:11.771613','2020-11-25 18:06:11.771613','Dallas',140,100),(22,'2020-11-25 18:06:21.391710','2020-11-25 18:06:21.391710','Piston',140,100),(23,'2020-11-25 18:06:31.856982','2020-11-25 18:06:31.856982','E/Drink',50,100),(24,'2020-11-25 18:06:39.422408','2020-11-25 18:06:39.422408','Magic',100,100),(25,'2020-11-25 18:06:48.574732','2020-11-25 18:06:48.574732','Trace',120,100),(26,'2020-11-25 18:06:59.522081','2020-11-25 18:06:59.522081','Sportman',15,100),(27,'2020-11-25 18:07:07.652221','2020-11-25 18:07:07.652221','Safari',10,100),(28,'2020-11-25 18:07:14.978711','2020-11-25 18:07:14.978711','Rooster',10,100),(29,'2020-11-25 18:07:23.020922','2020-11-25 18:07:23.020922','Hunters',300,100),(30,'2020-11-25 18:07:34.140258','2020-11-25 18:07:34.140258','Gomba',1,100),(31,'2020-11-25 18:07:42.084236','2020-11-25 18:07:42.084236','Matchbox',5,100),(32,'2020-11-25 18:07:51.941105','2020-11-25 18:07:51.941105','Balozi',200,100),(33,'2020-11-25 18:08:03.577094','2020-11-25 18:08:03.577094','Tusker Cider',200,100),(34,'2020-11-25 18:08:14.971654','2020-11-25 18:08:14.971654','Guinness',200,100),(35,'2020-11-25 18:08:25.089177','2020-11-25 18:08:25.089177','Pilsner',200,100),(36,'2020-11-25 18:08:38.771571','2020-11-25 18:08:38.771571','Allsopps',200,100),(37,'2020-11-25 18:08:49.269435','2020-11-25 18:08:49.269435','Whitecup',200,100),(38,'2020-11-25 18:08:57.529037','2020-11-25 18:08:57.529037','Tusker',200,100),(39,'2020-11-25 18:09:09.006760','2020-11-25 18:09:09.006760','Captain',300,100),(40,'2020-11-25 18:09:26.070687','2020-11-25 18:09:26.070687','County',170,100),(41,'2020-11-25 18:10:12.023050','2020-11-25 18:10:12.023050','Caribian',170,100),(42,'2020-11-25 18:10:20.994394','2020-11-25 18:10:20.994394','Soda Pet',70,100),(43,'2020-11-25 18:10:37.760642','2020-11-25 18:10:37.760642','Origin',300,100),(44,'2020-11-25 18:10:48.878432','2020-11-25 18:10:48.878432','Tripple Ice',180,100),(45,'2020-11-25 18:10:56.910033','2020-11-25 18:10:56.910033','Smart',100,100),(46,'2020-11-25 18:11:07.982443','2020-11-25 18:11:07.982443','Kingstone',100,100);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `shops`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `shops` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE `shops` (
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `shops` (
 
 LOCK TABLES `shops` WRITE;
 /*!40000 ALTER TABLE `shops` DISABLE KEYS */;
-INSERT INTO `shops` VALUES (1,'umoja','the first shop called umoja',0,'2020-11-08 13:32:43.202965','2020-11-21 22:24:09.000000'),(2,'fair','the second shop owned by peter called fair',0,'2020-11-08 13:32:47.049166','2020-11-20 12:16:12.000000');
+INSERT INTO `shops` VALUES (1,'umoja','the first shop called umoja',0,'2020-11-08 13:32:43.202965','2020-11-21 22:24:09.000000'),(2,'fair','the second shop owned by peter called fair',0,'2020-11-08 13:32:47.049166','2020-11-20 12:16:12.000000'),(3,'weaver store','store for the shops and any other stocks',0,'2020-11-25 09:54:25.600926','2020-11-25 09:54:25.600926');
 /*!40000 ALTER TABLE `shops` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +102,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `stock_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `stock_info` (
   `id` int NOT NULL AUTO_INCREMENT,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -116,7 +116,7 @@ CREATE TABLE `stock_info` (
   PRIMARY KEY (`id`),
   KEY `FK_921ab0a52a781d897d43272f252` (`shopId`),
   CONSTRAINT `FK_921ab0a52a781d897d43272f252` FOREIGN KEY (`shopId`) REFERENCES `shops` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `firstName` varchar(255) NOT NULL,
@@ -143,7 +143,7 @@ CREATE TABLE `user` (
   `role` varchar(255) NOT NULL,
   `idNumber` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,6 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Baraka','Baraka','driver','34628197'),(2,'Someone','Else','dassistant','12345678'),(3,'James','Mutisya','driver','12346535'),(4,'Joseph','Mutinda','driver','76542345');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +161,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `vehicle_route_driver`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `vehicle_route_driver` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -170,7 +169,7 @@ CREATE TABLE `vehicle_route_driver` (
   `driver` varchar(255) NOT NULL,
   `route` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +178,6 @@ CREATE TABLE `vehicle_route_driver` (
 
 LOCK TABLES `vehicle_route_driver` WRITE;
 /*!40000 ALTER TABLE `vehicle_route_driver` DISABLE KEYS */;
-INSERT INTO `vehicle_route_driver` VALUES (1,'2020-11-21 18:34:24.599507','KCA 359B','James Mutisya','Machakos - Kitui'),(2,'2020-11-23 08:56:39.990364','KCA 359B','Joseph Mutinda','Machakos - Kitui'),(3,'2020-11-23 09:04:12.623252','KCA 359B','Joseph Mutinda','Nairobi - Machakos'),(4,'2020-11-23 09:39:03.190661','KCA 359B','James Mutisya','Nairobi - Voi'),(5,'2020-11-23 09:42:11.730046','KDA','James Mutisya','Nairobi - Voi'),(6,'2020-11-23 09:43:24.730452','KBA 345T','Baraka Baraka','Nairobi - Machakos'),(7,'2020-11-23 09:44:56.381612','KAF 234R','Baraka Baraka','Machakos - Kitui');
 /*!40000 ALTER TABLE `vehicle_route_driver` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,13 +187,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `vehicle_routes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `vehicle_routes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `region` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +212,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `vehicle_stock_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `vehicle_stock_info` (
   `id` int NOT NULL AUTO_INCREMENT,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -227,7 +225,7 @@ CREATE TABLE `vehicle_stock_info` (
   PRIMARY KEY (`id`),
   KEY `FK_637bbb8f9fc3467c266e7709a96` (`vehicleId`),
   CONSTRAINT `FK_637bbb8f9fc3467c266e7709a96` FOREIGN KEY (`vehicleId`) REFERENCES `available_vehicles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,4 +247,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-23 15:54:27
+-- Dump completed on 2020-11-25 18:55:14
