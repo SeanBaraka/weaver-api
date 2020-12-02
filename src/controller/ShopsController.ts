@@ -1,5 +1,7 @@
+import { json } from "body-parser";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
+import { EndDayReport } from "../entity/EndDayReport";
 import { Shop } from "../entity/Shop";
 import { StockInfo } from "../entity/StockInfo";
 
@@ -10,6 +12,9 @@ export class ShopsController {
 
     //initialize the stock repository
     private stockRepo  = getRepository(StockInfo);
+
+    //initialize the reports repository
+    private reportRepo = getRepository(EndDayReport);
 
     /** gets all shops in the database */
     async getAll(req: Request, res: Response) {
@@ -113,19 +118,17 @@ export class ShopsController {
 
         const openingStockArray = Array.from(fullRequest);
 
-
         //only open the shop if the shop is not opened
+        // should get back to this. ASAP
         if(shop.openStatus != true) {
-
             // create a new stock record for each of the stock items
             openingStockArray.forEach(async (item: any) => {
-                
                 let stock = new StockInfo();
                 stock.productName = item.name;
-                stock.unitPrice = item.unitPrice
-                stock.openingUnits = item.availableUnits
-                stock.closingUnits = stock.openingUnits
-                stock.shop = shop
+                stock.unitPrice = item.unitPrice;
+                stock.openingUnits = item.availableUnits;
+                stock.closingUnits = stock.openingUnits;
+                stock.shop = shop;
 
                 // an attempt to add the stock to the database
                 let addStockAttempt = await this.stockRepo.save(stock);
@@ -144,12 +147,42 @@ export class ShopsController {
                 return successMessage; // success message
 
             }
-        } else {
-            const unableToOpenShop = {
-                "error": "sorry, the shop is already open"
+        } else if(shop.openStatus == true) {
+            openingStockArray.forEach(async (item: any) => {
+                // check if item exists in stock info
+                var existingStock = await this.stockRepo.findOne(
+                    {
+                        productName: item.name,
+                        shop: shop,
+                    }
+                    )
+
+                var todayDate = new Date(Date.now()).toISOString().split('T')[0];
+                if (existingStock != null && existingStock.createdAt.toISOString().split('T')[0] == todayDate ) {  
+                    existingStock.addedUnits += parseInt(item.availableUnits)
+                    existingStock.closingUnits = existingStock.openingUnits + existingStock.addedUnits
+                   
+                    const what = await this.stockRepo.save(existingStock);
+                   
+                } else {
+
+                    let stock = new StockInfo();
+                    stock.productName = item.name;
+                    stock.unitPrice = item.unitPrice;
+                    stock.openingUnits = item.availableUnits;
+                    stock.closingUnits = stock.openingUnits;
+                    stock.shop = shop;
+    
+                    // an attempt to add the stock to the database
+                    let addStockAttempt = await this.stockRepo.save(stock);
+                }
+            })
+            const successMessage = {
+                "success": "stock items updated"
             }
-            resp.status(405) // Method not allowed, same as before
-            return unableToOpenShop; // the unable to open shop error message
+            resp.status(200); // OK code, means everything went well
+
+            return successMessage; // success message
         }
 
     }
@@ -170,7 +203,7 @@ export class ShopsController {
             where: {
                 shop: shop
             }
-        })
+        });
 
         const daysStock = shopStocks.filter(x => x.createdAt.toISOString().split('T')[0] == date);
         
@@ -223,15 +256,38 @@ export class ShopsController {
             await this.stockRepo.save(stockItem);
         })
 
-        const successMessage = {
-            "success": "shop closed successfully"
+        // Create an end of day report for the closing stock items
+        const report = new EndDayReport()
+        report.stockItems = JSON.stringify(reqBody.stocks)
+        let soldAmount = 0;
+        closingStockArray.forEach((item: any) => {
+            soldAmount += parseInt(item.soldUnits)
+        })
+
+        report.shop = shop.name;
+        report.openingStockAmount = req.body.openingStock;
+        report.closingStockAmount = req.body.closingStock;
+        report.soldStockAmount = report.openingStockAmount - report.closingStockAmount
+
+        let attemptAddReport = await this.reportRepo.save(report);
+
+        if (attemptAddReport) {
+            const successMessage = {
+                "success": "shop closed successfully"
+            }
+    
+            // before completion, change the shop's status to closed
+            shop.openStatus = false;
+            await this.shopsRepo.save(shop);
+    
+            return successMessage;
+        } else {
+            const unknownMessage = {
+                "error": "something wrong happened"
+            }
+            resp.status(500);
+            return unknownMessage;
         }
-
-        // before completion, change the shop's status to closed
-        shop.openStatus = false;
-        await this.shopsRepo.save(shop);
-
-        return successMessage;
     }
 
     /** attempt to update the store for any new added stock records */
@@ -244,6 +300,14 @@ export class ShopsController {
             response.status(404);
             return foundStockMessage;
         }
+    }
+
+    /** get stock reports */
+    async getReport(req: Request, res: Response) {
+        const stockRepos = await this.reportRepo.find();
+
+        return stockRepos;
+        
     }
 
 }

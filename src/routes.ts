@@ -1,3 +1,4 @@
+import { AuthController } from "./controller/AuthController";
 import { ProductsController } from "./controller/ProductsController";
 import { ShopsController } from "./controller/ShopsController";
 import {UserController} from "./controller/UserController";
@@ -119,6 +120,30 @@ export const Routes = [{
     route: '/vehicles/in-route',
     controller: VehiclesController,
     action: 'vehiclesInRoute'
+},
+{
+    method: 'get',
+    route: '/stock/report',
+    controller: ShopsController,
+    action: 'getReport'
+},
+{
+    method: 'get',
+    route: '/auth/users',
+    controller: AuthController,
+    action: 'getAll'
+},
+{
+    method: 'post',
+    route: '/auth/login',
+    controller: AuthController,
+    action: 'loginAttempt'
+},
+{
+    method: 'post',
+    route: '/auth/register',
+    controller: AuthController,
+    action: 'registerUser'
 }
 
 ];
