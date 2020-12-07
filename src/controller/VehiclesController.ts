@@ -132,7 +132,7 @@ export class VehiclesController {
 
 
         const successMessage = {
-            "success": `Date: ${new Date(Date.now()).toLocaleDateString()}vehicle ${vehicle.plateNumber} dispatched. Total Stock Carried KSH. ${totalStock.toLocaleString()}`
+            "success": `Date: ${new Date(Date.now()).toLocaleDateString()} vehicle ${vehicle.plateNumber} dispatched. Total Stock Carried KSH. ${totalStock.toLocaleString()}`
         }
         return successMessage;
 

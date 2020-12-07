@@ -15,9 +15,13 @@ export class Product {
     @Column()
     name: string;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
     unitPrice: number;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
     availableUnits: number
 }

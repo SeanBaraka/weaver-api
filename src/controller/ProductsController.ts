@@ -14,7 +14,7 @@ export class ProductsController {
         // populate values from the request body object
         product.name = req.body.name;
         product.unitPrice = req.body.unitPrice;
-        product.availableUnits = req.body.qty
+        product.availableUnits = req.body.qty;
 
         // attempt to add the product to the products repository
         const addAttempt = await this.productsRepo.save(product);

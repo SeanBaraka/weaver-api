@@ -17,22 +17,30 @@ export class StockInfo {
     @Column()
     productName: string;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
     unitPrice: number;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
     openingUnits: number;
 
     @Column({
-        default: 0
+        default: 0,
+        type: 'float'
     })
     addedUnits: number;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
     closingUnits: number;
 
     @Column({
-        default: 0
+        default: 0,
+        type: 'float'
     })
     soldUnits: number;
 

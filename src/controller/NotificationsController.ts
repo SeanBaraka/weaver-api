@@ -45,7 +45,7 @@ export class NotificationsController {
         const message = request.body.message;
         
 
-        // const sendMessage = this.sendMessage(recipients, message);
+        const sendMessage = this.sendMessage(recipients, message);
 
         const messageSent = {
             "done": "message send"
