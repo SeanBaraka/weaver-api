@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import { AuthRole } from "./AuthRole";
 
 @Entity('user_logins')
@@ -21,7 +21,7 @@ export class AuthUser {
     @Column()
     passwordHash: string;
 
-    @OneToOne(type => AuthRole)
+    @ManyToOne(type => AuthRole, r => r.users)
     @JoinColumn()
     role: AuthRole
 

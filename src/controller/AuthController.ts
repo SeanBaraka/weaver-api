@@ -23,7 +23,7 @@ export class AuthController {
         user.lastName = requestBody.lastName;
         user.username = requestBody.username;
 
-        user.salt = randomBytes(16).toString();
+        user.salt = randomBytes(16).toString('hex');
 
         user.passwordHash = pbkdf2Sync(requestBody.password, user.salt, 1000, 64, 'sha512').toString('hex')
 

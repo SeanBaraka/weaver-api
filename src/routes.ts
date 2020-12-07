@@ -1,4 +1,5 @@
 import { AuthController } from "./controller/AuthController";
+import { NotificationsController } from "./controller/NotificationsController";
 import { ProductsController } from "./controller/ProductsController";
 import { ShopsController } from "./controller/ShopsController";
 import {UserController} from "./controller/UserController";
@@ -129,6 +130,12 @@ export const Routes = [{
 },
 {
     method: 'get',
+    route: '/vehicles/report',
+    controller: VehiclesController,
+    action: 'getReport'
+},
+{
+    method: 'get',
     route: '/auth/users',
     controller: AuthController,
     action: 'getAll'
@@ -144,6 +151,12 @@ export const Routes = [{
     route: '/auth/register',
     controller: AuthController,
     action: 'registerUser'
+},
+{
+    method: 'post',
+    route: '/notifications/send',
+    controller: NotificationsController,
+    action: 'sendNotification'
 }
 
 ];
