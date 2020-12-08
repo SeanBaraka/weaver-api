@@ -99,6 +99,8 @@ export class ShopsController {
      * Assigns the openning stock and marks the start of a day's selling cycle.
      */
     async openShop(req: Request, resp: Response) {
+        // get today's date for filtering
+        const today = new Date(Date.now()).toISOString().split('T')[0]
         const shopId = req.params.id; //obtain the shop id from the request parameters
 
         const fullRequest = req.body // the full request body
@@ -121,6 +123,8 @@ export class ShopsController {
         //only open the shop if the shop is not opened
         // should get back to this. ASAP
         if(shop.openStatus != true) {
+            // holds the total opening stock
+            let totalOpening = []
             // create a new stock record for each of the stock items
             openingStockArray.forEach(async (item: any) => {
                 let stock = new StockInfo();
@@ -129,18 +133,20 @@ export class ShopsController {
                 stock.openingUnits = item.availableUnits;
                 stock.closingUnits = stock.openingUnits;
                 stock.shop = shop;
-
+                
+                totalOpening.push(stock.openingUnits * stock.unitPrice);
                 // an attempt to add the stock to the database
                 let addStockAttempt = await this.stockRepo.save(stock);
             })
             // change the status of the shop to open
             shop.openStatus = true;
             let updateShop = await this.shopsRepo.save(shop);
+            const openingAmount = totalOpening.reduce((a, b) => a + b, 0)
 
             // when a stock is successfully added, then display a success message and a status code 200
             if(updateShop) {
                 const successMessage = {
-                    "success": "shop openned and stock record updated"
+                    "success": `Date: ${today} shop openned and stock record updated. Total opening stock ${openingAmount}`
                 }
                 resp.status(200); // OK code, means everything went well
 
@@ -149,23 +155,25 @@ export class ShopsController {
             }
         } else if(shop.openStatus == true) {
             openingStockArray.forEach(async (item: any) => {
-                // check if item exists in stock info
-                var existingStock = await this.stockRepo.findOne(
-                    {
-                        productName: item.name,
-                        shop: shop,
-                    }
-                    )
+                // check if item exists in stock info by finding all products with the given name and shop
+                var findStock = await this.stockRepo.find({
+                    productName: item.name,
+                    shop: shop
+                })
 
-                var todayDate = new Date(Date.now()).toISOString().split('T')[0];
-                if (existingStock != null && existingStock.createdAt.toISOString().split('T')[0] == todayDate ) {  
+                // filtering all products from the given shop by the created at date column. only show the last product with the current day's date and matching the given criteria.
+                const existingStock = findStock.filter(x => x.createdAt.toISOString().split('T')[0] === today).pop();
+
+               // if the product matching the criteria is found, play witht the added and available units as well as the closing units
+                if (existingStock != null) {  
                     existingStock.addedUnits += parseInt(item.availableUnits)
                     existingStock.closingUnits = existingStock.openingUnits + existingStock.addedUnits
                    
+                    // save the item changes to the database
                     const what = await this.stockRepo.save(existingStock);
                    
                 } else {
-
+                    // the product does not exist in the stock infos completely, now a new stockInfo record has to be created.
                     let stock = new StockInfo();
                     stock.productName = item.name;
                     stock.unitPrice = item.unitPrice;
@@ -178,7 +186,7 @@ export class ShopsController {
                 }
             })
             const successMessage = {
-                "success": "stock items updated"
+                "success": `Shop - ${shop.name} stock items updated at ${new Date(Date.now()).toLocaleTimeString()}`
             }
             resp.status(200); // OK code, means everything went well
 
@@ -305,8 +313,8 @@ export class ShopsController {
 
     /** get stock reports */
     async getReport(req: Request, res: Response) {
-        const stockRepos = await (await this.reportRepo.find()).reverse();
+        const stockRepos = (await this.reportRepo.find()).reverse();
         return stockRepos;
     }
 
-}
+} 
