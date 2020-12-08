@@ -17,7 +17,10 @@ export class EndDayReport {
     stockItems: string
 
     @Column()
-    openingStockAmount: number
+    openingStockAmount: number;
+
+    @Column()
+    addedStockAmount: number;
 
     @Column()
     closingStockAmount: number

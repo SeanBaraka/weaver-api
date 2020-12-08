@@ -267,7 +267,8 @@ export class ShopsController {
         report.shop = shop.name;
         report.openingStockAmount = req.body.openingStock;
         report.closingStockAmount = req.body.closingStock;
-        report.soldStockAmount = report.openingStockAmount - report.closingStockAmount
+        report.addedStockAmount = req.body.addedStock;
+        report.soldStockAmount = (report.openingStockAmount + report.addedStockAmount) - report.closingStockAmount
 
         let attemptAddReport = await this.reportRepo.save(report);
 
@@ -304,10 +305,8 @@ export class ShopsController {
 
     /** get stock reports */
     async getReport(req: Request, res: Response) {
-        const stockRepos = await this.reportRepo.find();
-
+        const stockRepos = await (await this.reportRepo.find()).reverse();
         return stockRepos;
-        
     }
 
 }
