@@ -1,5 +1,6 @@
 import { AuthController } from "./controller/AuthController";
 import { NotificationsController } from "./controller/NotificationsController";
+import { PaymentsController } from "./controller/PaymentsController";
 import { ProductsController } from "./controller/ProductsController";
 import { ShopsController } from "./controller/ShopsController";
 import {UserController} from "./controller/UserController";
@@ -157,6 +158,18 @@ export const Routes = [{
     route: '/notifications/send',
     controller: NotificationsController,
     action: 'sendNotification'
+},
+{
+    method: 'get',
+    route: '/payments/generate',
+    controller: PaymentsController,
+    action: 'generateToken'
+},
+{
+    method: 'post',
+    route: '/mpesa/registerurl',
+    controller: PaymentsController,
+    action: 'registerUrl'
 }
 
 ];

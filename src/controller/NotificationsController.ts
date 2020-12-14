@@ -38,17 +38,17 @@ export class NotificationsController {
 
     async sendNotification(request: Request, response: Response) {
 
-        // const recipients = ['+254724685059', "+254713366174" , "+254727275739"];
-
+        // recipients array from the request body
         const recipients = request.body.recipients;
 
+        // the message received from the request body
         const message = request.body.message;
         
 
         const sendMessage = this.sendMessage(recipients, message);
 
         const messageSent = {
-            "done": "message send"
+            "done": "message sent"
         }
 
         return messageSent;
