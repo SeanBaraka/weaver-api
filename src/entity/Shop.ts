@@ -1,5 +1,6 @@
-import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import { StockInfo } from "./StockInfo";
+import { StockProduct } from "./StockProduct";
 
 @Entity('shops')
 export class Shop {
@@ -17,16 +18,19 @@ export class Shop {
     @OneToMany(type=>StockInfo, stinfo => stinfo.shop, {
         cascade: true
     })
-    stocks: StockInfo[]
+    stocks: StockInfo[];
+
+    @OneToMany(type => StockProduct, prod => prod.shop)
+    products: StockProduct[];
 
     @Column({
         default: false
     })
-    openStatus: boolean
+    openStatus: boolean;
 
     @CreateDateColumn()
     createdAt: Date;
 
     @UpdateDateColumn()
-    updatedAt: Date
+    updatedAt: Date;
 }

@@ -170,6 +170,18 @@ export const Routes = [{
     route: '/mpesa/registerurl',
     controller: PaymentsController,
     action: 'registerUrl'
+},
+{
+    method: 'get',
+    route: '/stock/store/:id',
+    controller: ProductsController,
+    action: 'getStoreStock'
+},
+{
+    method: 'post',
+    route: '/products/inventory/add',
+    controller: ProductsController,
+    action: 'addInventoryProduct'
 }
 
 ];
