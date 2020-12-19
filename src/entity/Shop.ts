@@ -1,4 +1,5 @@
-import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import { shopCategory } from "./shopCategory";
 import { StockInfo } from "./StockInfo";
 import { StockProduct } from "./StockProduct";
 
@@ -15,6 +16,10 @@ export class Shop {
     })
     description: string;
 
+    @ManyToOne(type=> shopCategory)
+    @JoinColumn()
+    category: shopCategory;
+
     @OneToMany(type=>StockInfo, stinfo => stinfo.shop, {
         cascade: true
     })
@@ -22,7 +27,7 @@ export class Shop {
 
     @OneToMany(type => StockProduct, prod => prod.shop)
     products: StockProduct[];
-
+ 
     @Column({
         default: false
     })

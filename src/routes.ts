@@ -53,6 +53,12 @@ export const Routes = [{
 },
 {
     method: 'get',
+    route: '/shops/categories',
+    controller: ShopsController,
+    action: 'getCategories'
+},
+{
+    method: 'get',
     route: '/products',
     controller: ProductsController,
     action: 'getAll'
@@ -170,6 +176,30 @@ export const Routes = [{
     route: '/mpesa/registerurl',
     controller: PaymentsController,
     action: 'registerUrl'
+},
+{
+    method: 'post',
+    route: '/payments/status',
+    controller: PaymentsController,
+    action: 'getTransactionStatus'
+},
+{
+    method: 'post',
+    route: '/payments/balance',
+    controller: PaymentsController,
+    action: 'getAccountBalance'
+},
+{
+    method: 'post',
+    route: '/payments/result',
+    controller: PaymentsController,
+    action: 'getResult'
+},
+{
+    method: 'get',
+    route: '/payments/timeout',
+    controller: PaymentsController,
+    action: 'getTimeout'
 },
 {
     method: 'get',

@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { EndDayReport } from "../entity/EndDayReport";
 import { Shop } from "../entity/Shop";
+import { shopCategory } from "../entity/shopCategory";
 import { StockInfo } from "../entity/StockInfo";
 
 export class ShopsController {
@@ -16,15 +17,37 @@ export class ShopsController {
     //initialize the reports repository
     private reportRepo = getRepository(EndDayReport);
 
+    //initialize the shop categories repository
+    private shopCatRepo = getRepository(shopCategory);
+
     /** gets all shops in the database */
     async getAll(req: Request, res: Response) {
-        const shops = await this.shopsRepo.find(); // get all shops from the repository
+        const shops = await this.shopsRepo.find({relations: ['category']}); // get all shops from the repository
         return shops; // return the shops obtained
     }
 
     /** add a new shop */
     async addShop(req: Request, response: Response) {
         const shop = new Shop()
+        let category;
+        const shopCat = await this.shopCatRepo.findOne({
+            where: {
+                name: req.body.shopCategory
+            }
+        });
+
+        // attempt to see if a matching shop category was found
+        // if found, proceed, if not found, create a new category
+        if (shopCat == null) {
+            let cat = new shopCategory();
+            cat.name = req.body.shopCategory;
+            await this.shopCatRepo.save(cat);
+            category = cat
+        } else {
+            category = shopCat;
+        }
+
+        shop.category = category;
         shop.name = req.body.name
         if(req.body.desc) {
             shop.description = req.body.desc
@@ -217,6 +240,11 @@ export class ShopsController {
         
         return daysStock;
 
+    }
+
+    /** gets the shop categories */
+    async getCategories(request: Request, response: Response) {
+        return this.shopCatRepo.find();
     }
 
     /** closes the shop for the day, and calculates the total sales made */

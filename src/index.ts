@@ -11,6 +11,8 @@ createConnection().then(async connection => {
 
     // create express app
     const app = express();
+    
+
     app.use(bodyParser.json());
 
     let allowedHosts = ['http://localhost:4200', 'http://localhost', 'http://192.168.0.105']
