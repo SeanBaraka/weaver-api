@@ -173,9 +173,15 @@ export const Routes = [{
 },
 {
     method: 'post',
-    route: '/mpesa/registerurl',
+    route: '/payments/confirm',
     controller: PaymentsController,
-    action: 'registerUrl'
+    action: 'confirmUrl'
+},
+{
+    method: 'post',
+    route: '/payments/validate',
+    controller: PaymentsController,
+    action: 'validateUrl'
 },
 {
     method: 'post',
