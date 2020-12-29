@@ -1,4 +1,5 @@
 import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import { SaleRecord } from "./SaleRecord";
 import { shopCategory } from "./shopCategory";
 import { StockInfo } from "./StockInfo";
 import { StockProduct } from "./StockProduct";
@@ -24,6 +25,9 @@ export class Shop {
         cascade: true
     })
     stocks: StockInfo[];
+
+    @OneToMany(type => SaleRecord, saleRecord => saleRecord.shop)
+    sales: SaleRecord[]
 
     @OneToMany(type => StockProduct, prod => prod.shop)
     products: StockProduct[];

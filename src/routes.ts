@@ -2,6 +2,7 @@ import { AuthController } from "./controller/AuthController";
 import { NotificationsController } from "./controller/NotificationsController";
 import { PaymentsController } from "./controller/PaymentsController";
 import { ProductsController } from "./controller/ProductsController";
+import { SalesController } from "./controller/SalesController";
 import { ShopsController } from "./controller/ShopsController";
 import {UserController} from "./controller/UserController";
 import { VehiclesController } from "./controller/VehiclesController";
@@ -218,6 +219,24 @@ export const Routes = [{
     route: '/products/inventory/add',
     controller: ProductsController,
     action: 'addInventoryProduct'
+},
+{
+    method: 'post',
+    route: '/shops/:shopId/sale/',
+    controller: SalesController,
+    action: 'makeSale'
+},
+{
+    method: 'get',
+    route: '/shops/:shopId/sales/total/',
+    controller: SalesController,
+    action: 'getSales'
+},
+{
+    method: 'post',
+    route: '/stock/store/:shopId/',
+    controller: ProductsController,
+    action: 'removeProductFromStore'
 }
 
 ];

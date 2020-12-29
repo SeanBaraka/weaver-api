@@ -5,8 +5,11 @@ import { EndDayReport } from "../entity/EndDayReport";
 import { Shop } from "../entity/Shop";
 import { shopCategory } from "../entity/shopCategory";
 import { StockInfo } from "../entity/StockInfo";
+import * as jwt from 'jsonwebtoken'
 
 export class ShopsController {
+    // token secret key
+    private secretKey = 'bf9cee3ec7e478010b09d82f1f1ee38ca44937c6548ac01ed8bf19ae49f6c811726c95a7234d0b641e8e4cf48a0ae4fc28a33123adf286d3b3ecce40d4c7f67220';
     
     //initialize the shops repository
     private shopsRepo = getRepository(Shop);
@@ -22,7 +25,22 @@ export class ShopsController {
 
     /** gets all shops in the database */
     async getAll(req: Request, res: Response) {
-        const shops = await this.shopsRepo.find({relations: ['category']}); // get all shops from the repository
+        // first get the user roles for the logged in user;
+        const decodedToken: any = jwt.verify(req.headers.authorization.split(' ')[1], this.secretKey);
+
+        let shops;
+
+        if (decodedToken.isa === true) {
+            shops = await this.shopsRepo.find({relations: ['category']}); // get all shops from the repository
+        } else {
+            const cats = await this.shopCatRepo.find()
+            const categories = cats.filter(x => x.name === 'Bar' || x.name === 'Wholesale')
+            
+            shops = await (await this.shopsRepo.find({
+                relations: ['category']
+            })).filter(x => x.category.name === 'Bar' || x.category.name === 'Wholesale')
+        }
+        
         return shops; // return the shops obtained
     }
 
@@ -78,7 +96,10 @@ export class ShopsController {
         const date = new Date(Date.now()).toISOString().split('T')[0];
 
         // get the last stock value of the shop
-        const shopStock = shop.stocks.filter(x => x.createdAt.toISOString().split('T')[0] == date); 
+        let shopStock = [];
+        if (shop != null) {
+            shopStock = shop.stocks.filter(x => x.createdAt.toISOString().split('T')[0] == date);
+        }
         const openingtUnitsArray = [];
         const subTotalArray = [];
         shopStock.forEach((stockElement) => {

@@ -78,31 +78,93 @@ export class ProductsController {
      * stores to the wholesale or shops.
      */
     async addInventoryProduct(req: Request, response: Response) {
-        // create an instance of the product
-        let product = new StockProduct();
+        // check if the product exists in the first place
+        let product: StockProduct;
 
-        // find the shop matching the shop Id from the request body
-        const shop = await this.shopsRepo.findOne({
+        product = await this.stockProductsRepo.findOne({
             where: {
-                id: req.body.shopId
+                name: req.body.name
             }
         })
 
-        // assign the product to the specific shop
-        product.shop = shop;
-        
-        // populate values from the request body object
-        product.name = req.body.name;
-        product.serialNumber = req.body.serialNumber;
-        product.quantity = req.body.qty;
-        product.costPrice = req.body.costPrice;
-        product.minPrice = req.body.minPrice; 
-        product.maxPrice = req.body.maxPrice;
-        product.sellingPrice = req.body.sellingPrice;
+        if (product != null) {
+            
+            product.name = req.body.name;
+            product.serialNumber = req.body.serialNumber;
+            product.quantity = req.body.qty;
+            product.costPrice = req.body.costPrice;
+            product.minPrice = req.body.minPrice; 
+            product.maxPrice = req.body.maxPrice;
+            product.sellingPrice = req.body.sellingPrice;
 
-        // attept to add the product to the database and return the response
-        return this.addProductToRepository(product, response);
+            await this.stockProductsRepo.save(product);
 
+            const updated = {
+                "success": "product updated successfully"
+            }
+
+            return updated;
+
+        } else {
+
+            // create an instance of the product
+            product = new StockProduct();
+
+            // find the shop matching the shop Id from the request body
+            const shop = await this.shopsRepo.findOne({
+                where: {
+                    id: req.body.shopId
+                }
+            })
+
+            // assign the product to the specific shop
+            product.shop = shop;
+            
+            // populate values from the request body object
+            product.name = req.body.name;
+            product.serialNumber = req.body.serialNumber;
+            product.quantity = req.body.qty;
+            product.costPrice = req.body.costPrice;
+            product.minPrice = req.body.minPrice; 
+            product.maxPrice = req.body.maxPrice;
+            product.sellingPrice = req.body.sellingPrice;
+
+            // attept to add the product to the database and return the response
+            return this.addProductToRepository(product, response);
+        }
+
+    }
+
+    /** remove a product from the store */
+    async removeProductFromStore(req: Request, resp: Response) {
+        const productId = req.body.itemId
+        const shopId = req.params.shopId
+
+        const shop = await this.shopsRepo.findOne(shopId);
+
+        if (shop != null) {
+            const productToDelete = await this.stockProductsRepo.findOne({
+                where: {
+                    shop: shop,
+                    id: productId
+                }
+            })
+            await this.stockProductsRepo.remove(productToDelete);
+
+            const removed = {
+                "success": "product removed from shop"
+            }
+
+            return removed;
+
+        } else {
+            const error = {
+                "error": "somethings wrong somewhere and operation not completed"
+            }
+
+            resp.status(404);
+            return error;
+        }
     }
 
     /**get all products from a particular store */

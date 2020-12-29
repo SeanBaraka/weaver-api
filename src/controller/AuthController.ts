@@ -47,6 +47,8 @@ export class AuthController {
 
         const user = await this.userAuthRepo.findOne({
             username: requestBody.username
+        }, {
+            relations: ['role']
         })
 
         if (user != null) {
@@ -54,11 +56,14 @@ export class AuthController {
 
             const tryPass = pbkdf2Sync(requestBody.password, salt, 1000, 64, 'sha512').toString('hex')
 
+            const isAdmin = user.role.name === 'system admin'
+            const isShopAdmin = user.role.name === 'shop admin'
             if (tryPass === user.passwordHash) {
                 const userInfo = {
                     'user': user.username,
                     'arm': user.role,
-                    'isa': true
+                    'isa': isAdmin ? true : false,
+                    'issa': isShopAdmin ? true : false
                 }
                 const token = jwt.sign(userInfo, 'bf9cee3ec7e478010b09d82f1f1ee38ca44937c6548ac01ed8bf19ae49f6c811726c95a7234d0b641e8e4cf48a0ae4fc28a33123adf286d3b3ecce40d4c7f67220', {expiresIn: '5 days'})
 
