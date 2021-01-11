@@ -49,6 +49,7 @@ export class PaymentsController {
         let accessToken = '';
         
         accessToken = (await this.mpesaApi.oAuth('jWzLv04fvvMfS8BoG44aPdKisq16Ygki', 'CGfmOhraejGFjO4n')).data
+        accessToken = (await this.mpesaApi.oAuth(this.key, this.secret)).data
 
         return accessToken;
         

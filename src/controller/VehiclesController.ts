@@ -28,7 +28,11 @@ export class VehiclesController {
         const vehicle = new Vehicle();
 
         vehicle.modelType = requestBody.modelType;
+<<<<<<< HEAD
         vehicle.plateNumber = requestBody.plateNumber;
+=======
+        vehicle.plateNumber = requestBody.plateNumber
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 
         const addAttempt = await this.vehicleRepo.save(vehicle);
 

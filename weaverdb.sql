@@ -7,7 +7,11 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+<<<<<<< HEAD
 /*!50503 SET NAMES utf8 */;
+=======
+/*!50503 SET NAMES utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,13 +25,21 @@
 
 DROP TABLE IF EXISTS `available_vehicles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `available_vehicles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `modelType` varchar(255) NOT NULL,
   `plateNumber` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +58,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -55,7 +71,11 @@ CREATE TABLE `products` (
   `unitPrice` float NOT NULL,
   `availableUnits` float NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +94,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `shops`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `shops` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -83,7 +107,11 @@ CREATE TABLE `shops` (
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +130,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `stock_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `stock_info` (
   `id` int NOT NULL AUTO_INCREMENT,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -116,7 +148,11 @@ CREATE TABLE `stock_info` (
   PRIMARY KEY (`id`),
   KEY `FK_921ab0a52a781d897d43272f252` (`shopId`),
   CONSTRAINT `FK_921ab0a52a781d897d43272f252` FOREIGN KEY (`shopId`) REFERENCES `shops` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=148 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=148 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +171,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `stock_summaries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `stock_summaries` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -146,7 +186,11 @@ CREATE TABLE `stock_summaries` (
   `stockItems` text NOT NULL,
   `addedStockAmount` int NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +209,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `firstName` varchar(255) NOT NULL,
@@ -173,7 +221,11 @@ CREATE TABLE `user` (
   `role` varchar(255) NOT NULL,
   `idNumber` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +243,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_logins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `user_logins` (
   `id` int NOT NULL AUTO_INCREMENT,
   `salt` varchar(255) NOT NULL,
@@ -203,7 +259,11 @@ CREATE TABLE `user_logins` (
   PRIMARY KEY (`id`),
   KEY `FK_0cee36297631036ccef58a2b14b` (`roleId`),
   CONSTRAINT `FK_0cee36297631036ccef58a2b14b` FOREIGN KEY (`roleId`) REFERENCES `user_roles` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,12 +282,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `user_roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,14 +314,22 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `vehicle_reports`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `vehicle_reports` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `vehicle` varchar(255) NOT NULL,
   `stock` text NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +348,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `vehicle_route_driver`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `vehicle_route_driver` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -280,7 +360,11 @@ CREATE TABLE `vehicle_route_driver` (
   `driver` varchar(255) NOT NULL,
   `route` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,13 +383,21 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `vehicle_routes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `vehicle_routes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `region` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -324,7 +416,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `vehicle_stock_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+<<<<<<< HEAD
 /*!50503 SET character_set_client = utf8 */;
+=======
+/*!50503 SET character_set_client = utf8mb4 */;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 CREATE TABLE `vehicle_stock_info` (
   `id` int NOT NULL AUTO_INCREMENT,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -337,7 +433,11 @@ CREATE TABLE `vehicle_stock_info` (
   PRIMARY KEY (`id`),
   KEY `FK_637bbb8f9fc3467c266e7709a96` (`vehicleId`),
   CONSTRAINT `FK_637bbb8f9fc3467c266e7709a96` FOREIGN KEY (`vehicleId`) REFERENCES `available_vehicles` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
