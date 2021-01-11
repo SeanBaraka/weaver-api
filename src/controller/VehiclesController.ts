@@ -23,16 +23,12 @@ export class VehiclesController {
 
     /** add a new vehicle into the repository */
     async addnew(req: Request, response: Response) {
-        const requestBody = req.body
+        const requestBody = req.body 
 
         const vehicle = new Vehicle();
 
-        vehicle.modelType = requestBody.modelType;
-<<<<<<< HEAD
+        vehicle.modelType = requestBody.modelType; 
         vehicle.plateNumber = requestBody.plateNumber;
-=======
-        vehicle.plateNumber = requestBody.plateNumber
->>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 
         const addAttempt = await this.vehicleRepo.save(vehicle);
 

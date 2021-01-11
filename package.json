@@ -3,29 +3,17 @@
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
    "devDependencies": {
-<<<<<<< HEAD
       "@types/express": "^4.17.8",
       "@types/jsonwebtoken": "^8.5.0",
       "@types/mpesa-node": "^0.1.0",
       "@types/node": "^8.0.29",
       "@types/node-fetch": "^2.5.7",
       "@types/socket.io": "^2.1.12",
-=======
-      "@types/jsonwebtoken": "^8.5.0",
-      "@types/node": "^8.0.29",
->>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
       "jsonwebtoken": "^8.5.1",
       "ts-node": "3.3.0",
       "typescript": "3.3.3333"
    },
    "dependencies": {
-<<<<<<< HEAD
-=======
-      "@types/express": "^4.17.8",
-      "@types/mpesa-node": "^0.1.0",
-      "@types/node-fetch": "^2.5.7",
-      "@types/socket.io": "^2.1.12",
->>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
       "africastalking": "^0.5.2",
       "body-parser": "^1.18.1",
       "cors": "^2.8.5",
@@ -35,11 +23,7 @@
       "node-fetch": "^2.6.1",
       "nodemon": "^2.0.6",
       "reflect-metadata": "^0.1.10",
-<<<<<<< HEAD
       "socket.io": "^3.0.5",
-=======
-      "socket.io": "^3.0.4",
->>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
       "typeorm": "0.2.25"
    },
    "scripts": {

@@ -176,11 +176,7 @@ export const Routes = [{
     method: 'post',
     route: '/payments/confirm',
     controller: PaymentsController,
-<<<<<<< HEAD
     action: 'confirmTransaction'
-=======
-    action: 'confirmUrl'
->>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
 },
 {
     method: 'post',
@@ -213,15 +209,12 @@ export const Routes = [{
     action: 'getTimeout'
 },
 {
-<<<<<<< HEAD
     method: 'post',
     route: '/payments/transaction/check',
     controller: PaymentsController,
     action: 'makePayment'
 },
 {
-=======
->>>>>>> 46c123b0d35ed46abc579a2c9faabee474fba3fc
     method: 'get',
     route: '/stock/store/:id',
     controller: ProductsController,
