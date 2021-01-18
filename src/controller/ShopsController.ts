@@ -37,7 +37,7 @@ export class ShopsController {
             const categories = cats.filter(x => x.name === 'Bar' || x.name === 'Wholesale')
             
             shops = await (await this.shopsRepo.find({
-                relations: ['category']
+                relations: ['category'] 
             })).filter(x => x.category.name === 'Bar' || x.category.name === 'Wholesale')
         }
         

@@ -196,4 +196,77 @@ export class ProductsController {
         // return the array of products found
         return products;
     }
+
+    /** product transfers between shops */
+    async transferProducts(request: Request, response: Response) {
+        // prducts will move from a particular store, to another store.
+        // our request should have both stores
+        const sourceShopId = request.body.sourceShopId // read the shop id
+        const sourceShop  = await this.shopsRepo.findOne(sourceShopId); // use the shop id to find the matching shop
+
+        const destinationShopId = request.body.destinationShopId; // read the shop id from the request, same as above
+        const destinationShop = await this.shopsRepo.findOne(destinationShopId); // use the shop id to find the matching shop
+
+        // we also need to have the product and the quantities to transfer
+        const productId = request.body.productId
+        const productToMove = await this.stockProductsRepo.findOne(productId, {
+            where: {
+                shop: sourceShop
+            }
+        });
+
+        // what amounts or quantities to move were selected from the client end ?
+        const quantityToMove = request.body.quantity // reading the quantity to transfer from the request body
+
+        // now we have the shop moving the product,and the product being moved.
+        // we could check if both the available units for the product at the source shop
+        // are suitable for transferring. ie. greater or equal to the quantityToMove
+        // if the condition is satisfied, 
+        if (productToMove.quantity >= quantityToMove) { 
+            // if the available units are much more than the selected quantity, and we assume this is the normal behaviour,
+            // since everything is going well upto this stage, lets check if the destination shop has the product in its
+            // inventory.
+            const productIsPresentInDestinationShop = destinationShop.products.find(x => x.name == productToMove.name)
+            if (productIsPresentInDestinationShop) {
+                // here a product matching the given name is found
+                // since a product was found, modifiy its quantity. the end
+                productIsPresentInDestinationShop.quantity += quantityToMove
+
+                //save the new product and return a message confirming the update.
+                await this.stockProductsRepo.save(productIsPresentInDestinationShop);
+
+                const updateMessage = {
+                    "success": `${quantityToMove} items moved from ${sourceShop.name} to ${destinationShop.name}`
+                }
+
+                return updateMessage; // send the update message back to the client
+            } else {
+                // the product does not exist on the shop.
+                // what do we do now you may ask, we create that product in the shop
+                const cloneProduct = productToMove; // we clone the product to move into a new product
+                cloneProduct.shop = destinationShop; // change the shop of the clonned product to match the destination shop
+
+                const addAttempt = await this.stockProductsRepo.save(cloneProduct); // save the clonned product to the destination shop
+
+                const successMessage = {
+                    "success": `${quantityToMove} items moved from ${sourceShop.name} to ${destinationShop.name}`
+                }
+
+                return successMessage; // return the success message back to the client
+            }
+
+
+
+        } else {
+            // throw and error indicating that the products being moved are not available.
+            // i.e  the quantity to move is greater than the available product units in that particular shop
+            const errorMessage = {
+                "error": `unable to move ${quantityToMove} items, the available units are ${productToMove.quantity}`
+            }
+
+            response.status(304); // attach a not modified header to the response given out
+            return errorMessage; // display the error message to the user
+        }
+        
+    }
 }

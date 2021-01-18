@@ -243,6 +243,12 @@ export const Routes = [{
     route: '/stock/store/:shopId/',
     controller: ProductsController,
     action: 'removeProductFromStore'
-}
+},
+{
+    method: 'post',
+    route: '/stock/store/transfer',
+    controller: ProductsController,
+    action: 'transferProducts'
+} 
 
 ];

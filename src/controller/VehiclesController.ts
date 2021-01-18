@@ -21,7 +21,7 @@ export class VehiclesController {
         return vehicles;
     }
 
-    /** add a new vehicle into the repository */
+    /** add a new vehicle into the repository/database */
     async addnew(req: Request, response: Response) {
         const requestBody = req.body 
 
