@@ -161,6 +161,18 @@ export const Routes = [{
     action: 'registerUser'
 },
 {
+    method: 'get',
+    route: '/auth/checkadmin',
+    controller: AuthController,
+    action: 'checkAdmin'
+},
+{
+    method: 'get',
+    route: '/auth/roles',
+    controller: AuthController,
+    action: 'getRoles'
+},
+{
     method: 'post',
     route: '/notifications/send',
     controller: NotificationsController,

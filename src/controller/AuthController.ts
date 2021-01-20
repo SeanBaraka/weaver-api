@@ -14,6 +14,11 @@ export class AuthController {
         return (await this.userAuthRepo.find()).reverse;
     }
 
+    /** get the available user roles present in the system */
+    async getRoles(request: Request, response: Response) {
+        return this.rolesRepo.find();
+    }
+
     /** user registration */
     async registerUser(req: Request, res: Response) {
         const requestBody = req.body
@@ -87,6 +92,57 @@ export class AuthController {
 
             res.status(404);
             return error;
+        }
+    }
+
+    /** check if a super user is created in the database.
+     * who is a super user you may ask, this is one with either a 'system admin' role
+     * or 'shop admin' role
+     */
+    async checkAdmin(req: Request, res: Response) {
+        // first check for the presence of roles mentioned above
+
+        // 1. check for the system admin role
+        const systemAdminRole = await this.rolesRepo.findOne({
+            where: {
+                name: 'system admin'
+            }
+        });
+        // 2. check for the shop administrator role
+        const shopAdminRole = await this.rolesRepo.findOne({
+            where: {
+                name: 'shop admin'
+            }
+        })
+
+        // make an attempt to find the user associated with the 
+        // system admin role
+        const systemAdmin = await this.userAuthRepo.find({
+            where: {
+                role: systemAdminRole
+            }
+        })
+
+        // make an attempt to find the user associated with the shop admin role
+        // i.e the shop owner, usually created by the system admin.
+        const shopAdmin = await this.userAuthRepo.find({
+            where: {
+                role: shopAdminRole
+            }
+        })
+
+        // satisfy the condition if the shop admins exist, or a system administrator exists
+        if(systemAdmin.length > 0 || shopAdmin.length > 0) {
+            const foundAdmins = {
+                "status": true
+            }
+            return foundAdmins;
+        } else {
+            // return false if no shop administrators or system admins exist
+            const adminsNotFound = {
+                "status": false
+            }
+            return adminsNotFound;
         }
     }
 }
