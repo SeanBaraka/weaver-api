@@ -258,7 +258,7 @@ export const Routes = [{
 },
 {
     method: 'post',
-    route: '/stock/store/transfer',
+    route: '/stock/moveproducts',
     controller: ProductsController,
     action: 'transferProducts'
 } 

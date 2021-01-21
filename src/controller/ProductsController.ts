@@ -203,10 +203,14 @@ export class ProductsController {
         // our request should have both stores
         const sourceShopId = request.body.sourceShopId // read the shop id
         const sourceShop  = await this.shopsRepo.findOne(sourceShopId); // use the shop id to find the matching shop
+        // find a list of all products in the source shop
+        const sourceShopProducts = sourceShop.products;
+
 
         const destinationShopId = request.body.destinationShopId; // read the shop id from the request, same as above
         const destinationShop = await this.shopsRepo.findOne(destinationShopId); // use the shop id to find the matching shop
 
+        return destinationShop;
         // we also need to have the product and the quantities to transfer
         const productId = request.body.productId
         const productToMove = await this.stockProductsRepo.findOne(productId, {
@@ -232,6 +236,11 @@ export class ProductsController {
                 // since a product was found, modifiy its quantity. the end
                 productIsPresentInDestinationShop.quantity += quantityToMove
 
+                // as much as we add to the destination shop, also subtract from the source shop
+                const selectedProduct = sourceShopProducts.find(x => x.name == productIsPresentInDestinationShop.name);
+                selectedProduct.quantity -= quantityToMove;
+                await this.stockProductsRepo.save(selectedProduct);
+
                 //save the new product and return a message confirming the update.
                 await this.stockProductsRepo.save(productIsPresentInDestinationShop);
 
@@ -247,7 +256,11 @@ export class ProductsController {
                 cloneProduct.shop = destinationShop; // change the shop of the clonned product to match the destination shop
 
                 const addAttempt = await this.stockProductsRepo.save(cloneProduct); // save the clonned product to the destination shop
-
+                const selectedProduct = sourceShopProducts.find(x => x.name == addAttempt.name)
+                selectedProduct.quantity -= addAttempt.quantity
+                // save the result
+                await this.stockProductsRepo.save(selectedProduct);
+                
                 const successMessage = {
                     "success": `${quantityToMove} items moved from ${sourceShop.name} to ${destinationShop.name}`
                 }
