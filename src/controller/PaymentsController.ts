@@ -112,6 +112,8 @@ export class PaymentsController {
     async confirmUrl(req: Request, res: Response) {
         const data = req.body
 
+        console.log('confirmation message', data)
+
         const transactionExists = await this.transactionRepo.findOne({
             where: {
                 transactionID: data.TransID
@@ -154,44 +156,20 @@ export class PaymentsController {
     }
 
     /** make payment attempt */
-    async makePayment(req: any, res: Response) {
-        const amount = req.body.amount
-
-        // const doRegister = await this.mpesaApi.c2bRegister('https://7e65cfaa6f24.ngrok.io/payments/confirm', 'https://7e65cfaa6f24.ngrok.io/payments/validate').then((success) => {
-        //     console.log(success);
-        // });
-        // const result = {};
+    async registerUrls(req: any, res: Response) {
+        const registrationRequest = await this.mpesaApi.c2bRegister('https://api.weaverbirdsupplies.co.ke/payments/confirm', 'https://api.weaverbirdsupplies.co.ke/payments/validate', '4062541', 'Completed');
+        const data = await registrationRequest.data;
+        const result = {data};
         
-        // return result;
-
-       const transaction = await this.mpesaApi.c2bSimulate('254708374149',amount, 'Bill123');
-        const transactionResult = await transaction.data
-        if(transactionResult) {
-
-            const socket: SocketIO.Socket = req.io 
-            socket.on('paymentValidated', (data) => {
-                console.log('socket io response', data);
-            })
-            const result: any = {}
-            // create an object to hold the transaction details
-            const transactionDetails = {
-                transactionID : result.TransID,
-                amount: result.TransAmount,
-                phone: result.MSISDN,
-                firstName: result.FirstName,
-                LastName: result.LastName
-            }
-            // return the transaction Details
-            return transactionDetails;
-        }
-        return req.body;
+        return result;
     }
 
     /** confirmation callback url */
     async confirmTransaction(req: any, response: Response) {
+        // the confirmation message is stored in the request body object.
+        // we push the message to the socket io server, which broadcasts in 
+        // 
         const socket: SocketIO.Socket = req.io;
-
-        console.log(req.body)
 
         const transactionDetails = {
             transactionID : req.body.TransID,
@@ -199,8 +177,10 @@ export class PaymentsController {
             phone: req.body.MSISDN,
             firstName: req.body.FirstName,
             lastName: req.body.LastName
-        }
+        }   
         
+        // also transmit the account balance of the shortcode
+        socket.emit('accountBalance', req.body.OrgAccountBalance)
         const emitMessage = socket.emit('paymentConfirmed', transactionDetails)
         return emitMessage ? {'success': 'success'} : {'error': 'error'}
     }

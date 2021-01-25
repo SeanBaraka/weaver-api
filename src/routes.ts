@@ -191,7 +191,7 @@ export const Routes = [{
     action: 'confirmTransaction'
 },
 {
-    method: 'post',
+    method: 'get',
     route: '/payments/validate',
     controller: PaymentsController,
     action: 'validateUrl'
@@ -222,9 +222,9 @@ export const Routes = [{
 },
 {
     method: 'post',
-    route: '/payments/transaction/check',
+    route: '/payments/registerurls',
     controller: PaymentsController,
-    action: 'makePayment'
+    action: 'registerUrls'
 },
 {
     method: 'get',
@@ -261,6 +261,12 @@ export const Routes = [{
     route: '/stock/moveproducts',
     controller: ProductsController,
     action: 'transferProducts'
-} 
+},
+{
+    method: 'get',
+    route: '/sales/all',
+    controller: SalesController,
+    action: 'getAllSales'
+}
 
 ];

@@ -60,6 +60,11 @@ export class SalesController {
 
     }
 
+    /** get all sales records */
+    async getAllSales() {
+        return this.salesRepo.find();
+    }
+
     /** get all sales records for a particular shop */
     async getSales(req: Request, response: Response) {
         const shopId = req.params.shopId
