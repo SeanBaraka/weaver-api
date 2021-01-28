@@ -171,6 +171,8 @@ export class PaymentsController {
         // 
         const socket: SocketIO.Socket = req.io;
 
+        console.log(req.body);
+
         const transactionDetails = {
             transactionID : req.body.TransID,
             amount: req.body.TransAmount,

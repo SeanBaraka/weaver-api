@@ -231,15 +231,17 @@ export class ProductsController {
             // if the available units are much more than the selected quantity, and we assume this is the normal behaviour,
             // since everything is going well upto this stage, lets check if the destination shop has the product in its
             // inventory.
-            const productIsPresentInDestinationShop = destinationShopProducts.find(x => x.id == productToMove.id)
-            if (productIsPresentInDestinationShop) {
+            const productIsPresentInDestinationShop = destinationShopProducts.find(x => x.serialNumber == productToMove.serialNumber)
+            if (productIsPresentInDestinationShop != null) {
                 // here a product matching the given name is found
                 // since a product was found, modifiy its quantity. the end
-                productIsPresentInDestinationShop.quantity += quantityToMove
+                productIsPresentInDestinationShop.quantity = productIsPresentInDestinationShop.quantity + quantityToMove
+                await this.stockProductsRepo.save(productIsPresentInDestinationShop);
                 await this.shopsRepo.save(destinationShop); // update the destination shop
                 // as much as we add to the destination shop, also subtract from the source shop
                 productToMove.quantity -= quantityToMove;
                 await this.shopsRepo.save(sourceShop); // update the source shop
+                await this.stockProductsRepo.save(productToMove)
 
                 const updateMessage = {
                     "success": `${quantityToMove} items moved from ${sourceShop.name} to ${destinationShop.name}`
@@ -249,17 +251,18 @@ export class ProductsController {
             } else {
                 // the product does not exist on the shop.
                 // what do we do now you may ask, we create that product in the shop
-                const cloneProduct = productToMove; // we clone the product to move into a new product
+                const cloneProduct = {...productToMove}; // we clone the product to move into a new product
                 cloneProduct.shop = destinationShop; // change the shop of the clonned product to match the destination shop
-
+                cloneProduct.id = undefined; // here, we do something really important. i.e. change the id to undefined, to allow sql to give us an id
                 cloneProduct.quantity = quantityToMove; // change the quantity of the cloned product
-
+               
                 const addAttempt = await this.stockProductsRepo.save(cloneProduct); // save the clonned product to the destination shop
-            
-                productToMove.quantity -= addAttempt.quantity // update the product to move quantity in the source shop
-                // save the result
-                await this.stockProductsRepo.save(productToMove);
-                
+
+                // get the product from the source shop
+                const item = sourceShopProducts.find(x => x.serialNumber == productToMove.serialNumber)
+                item.quantity -= quantityToMove
+                await this.stockProductsRepo.save(item);
+
                 const successMessage = {
                     "success": `${quantityToMove} items moved from ${sourceShop.name} to ${destinationShop.name}`
                 }
