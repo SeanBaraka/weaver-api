@@ -6,7 +6,7 @@ import {Request, Response} from "express";
 import {Routes} from "./routes";
 import {User} from "./entity/User";
 import * as cors from "cors";
-import * as socketIO from 'socket.io';
+import { Server, Socket} from 'socket.io';
 import * as http from 'http'
 import { AuthUser } from "./entity/AuthUser";
 import { AuthRole } from "./entity/AuthRole";
@@ -20,7 +20,7 @@ createConnection().then(async connection => {
 
     app.use(bodyParser.json());
 
-    let allowedHosts = ['http://localhost:4200', 'http://localhost', 'http://192.168.0.105']
+    let allowedHosts = ['http://localhost:4200', 'http://localhost', 'http://192.168.0.105', 'http://178.32.191.159']
     let corsOptionsDelegate = function(req, callback) {
         let corsOptions: cors.CorsOptions;
         if(allowedHosts.indexOf(req.header('Origin')) !== -1) {
@@ -42,7 +42,7 @@ createConnection().then(async connection => {
     // creaing a new socket io server instance.
     // ** this is where the magic happens, everytime.
     // and let the realtime data, start flowing...
-    const io: socketIO.Server = new socketIO.Server(httpServer, {
+    const io: Server = new Server(httpServer, {
         cors: {
             origin: '*',
             methods: ['GET', 'POST']
@@ -51,7 +51,7 @@ createConnection().then(async connection => {
 
     // here, we check if a new connection has been established.
     // the 'connection' event of the server..
-    io.on('connection', (clientSocket: socketIO.Socket) => {
+    io.on('connection', (clientSocket: Socket) => {
         console.log(`\n** We have a visitor over here. Their ID: ${clientSocket.id}`);
     })
 

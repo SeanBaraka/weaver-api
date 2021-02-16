@@ -1,4 +1,5 @@
 import { AuthController } from "./controller/AuthController";
+import { CustomersController } from "./controller/CustomersController";
 import { NotificationsController } from "./controller/NotificationsController";
 import { PaymentsController } from "./controller/PaymentsController";
 import { ProductsController } from "./controller/ProductsController";
@@ -267,6 +268,12 @@ export const Routes = [{
     route: '/sales/all',
     controller: SalesController,
     action: 'getAllSales'
+},
+{
+    method: 'get',
+    route: '/customers/list',
+    controller: CustomersController,
+    action: 'getAll'
 }
 
 ];

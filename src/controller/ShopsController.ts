@@ -30,7 +30,7 @@ export class ShopsController {
 
         let shops;
 
-        if (decodedToken.isa === true) {
+        if (decodedToken.isa === true || decodedToken.issa === true) {
             shops = await this.shopsRepo.find({relations: ['category']}); // get all shops from the repository
         } else {
             const cats = await this.shopCatRepo.find()
@@ -38,7 +38,11 @@ export class ShopsController {
             
             shops = await (await this.shopsRepo.find({
                 relations: ['category'] 
-            })).filter(x => x.category.name === 'Bar' || x.category.name === 'Wholesale')
+            })).filter(x => x.category.name === 'Bar')
+
+            // shops = await (await this.shopsRepo.find({
+            //     relations: ['category'] 
+            // })).filter(x => x.category.name === 'Bar' || x.category.name === 'Wholesale')
         }
         
         return shops; // return the shops obtained

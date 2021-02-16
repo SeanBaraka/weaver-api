@@ -17,6 +17,8 @@ export class SalesController {
         const saleRequest = request.body
         const shopId = request.params.shopId
 
+        console.log(saleRequest);
+
         const newSale = new SaleRecord();
         const shop = await this.shopsRepo.findOne(shopId);
         // the shop cannot be null, at the moment, but somewhere down the line you'll have to handle this scenario appropriately. for now, kasonge buda
@@ -24,7 +26,7 @@ export class SalesController {
         /** before recording the sale transaction, 
          * check the products, and if their quantities allow for the sale to
          * go through
-         */
+         */ 
         const saleItems: StockProduct[] = Array.from(saleRequest.items);
         saleItems.forEach(async (item) => {
             const selectedProduct = await this.productsRepo.findOne(item.id);
@@ -42,7 +44,27 @@ export class SalesController {
         newSale.saleAmount = saleRequest.totalAmount
         newSale.receivedAmount = saleRequest.amountReceived
         newSale.balance = newSale.receivedAmount - newSale.saleAmount
-
+        if(saleRequest.customer != undefined) {
+            const customer = saleRequest.customer;
+            if (customer != 'customer') {
+                let newCustomer: Customer;
+                newCustomer = await this.customersRepo.findOne({
+                    where: {
+                        name: customer.customerName
+                    }
+                })
+                if (newCustomer != null) {
+                    newSale.customer = newCustomer
+                } else {
+                    newCustomer = new Customer();
+                    newCustomer.name = customer.customerName
+                    newCustomer.telephone = customer.customerTel
+                    await this.customersRepo.save(newCustomer);
+                    newSale.customer = customer;
+                }
+            }
+        }
+        
         try {
             const addSaleAttempt = await this.salesRepo.save(newSale);
 
@@ -62,7 +84,9 @@ export class SalesController {
 
     /** get all sales records */
     async getAllSales() {
-        return this.salesRepo.find();
+        return this.salesRepo.find({
+            relations: ['shop']
+        });
     }
 
     /** get all sales records for a particular shop */
