@@ -22,7 +22,7 @@ export class PaymentsController {
     private mpesaApi = new Mpesa({
         consumerKey: 'jWzLv04fvvMfS8BoG44aPdKisq16Ygki',
         consumerSecret: 'CGfmOhraejGFjO4n',
-        environment: 'production',
+        enviroment: 'production',
         shortCode: '4062541',
         securityCredential: 'Safaricom3021#',
         initiatorName: 'apiop37',

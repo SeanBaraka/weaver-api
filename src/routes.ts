@@ -5,6 +5,7 @@ import { PaymentsController } from "./controller/PaymentsController";
 import { ProductsController } from "./controller/ProductsController";
 import { SalesController } from "./controller/SalesController";
 import { ShopsController } from "./controller/ShopsController";
+import { SupplierController } from "./controller/SupplierController";
 import {UserController} from "./controller/UserController";
 import { VehiclesController } from "./controller/VehiclesController";
 
@@ -269,11 +270,41 @@ export const Routes = [{
     controller: SalesController,
     action: 'getAllSales'
 },
+
+{
+    method: 'post',
+    route: '/customer/add',
+    controller: CustomersController,
+    action: 'addCustomer'
+},
+
+{
+    method: 'delete',
+    route: '/customer/:id',
+    controller: CustomersController,
+    action: 'removeCustomer'
+
+},
 {
     method: 'get',
-    route: '/customers/list',
+    route: '/customer/list',
     controller: CustomersController,
-    action: 'getAll'
-}
+    action: 'getAllCustomers'
+},{
+    method: 'post',
+    route: '/supplier/add',
+    controller: SupplierController,
+    action: 'addSupplier'
+},{
+    method: 'get',
+    route: '/supplier/all',
+    controller: SupplierController,
+    action: 'getAllSupplier'
+},{
+    method: 'delete',
+    route: '/supplier/remove',
+    controller: SupplierController,
+    action: 'deleteSupplier'
 
+}
 ];
